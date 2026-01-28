@@ -1,0 +1,20 @@
+[project]
+name = "prime"
+version = "0.1.0"
+description = "Your Prime Minister - LLM-powered project management"
+requires-python = ">=3.10"
+dependencies = [
+    "google-api-python-client",
+    "google-auth-httplib2",
+    "google-auth-oauthlib",
+    "typer>=0.21.1",
+]
+
+[project.optional-dependencies]
+api = [
+    "anthropic",
+    "python-dotenv",
+]
+
+[tool.uv]
+dev-dependencies = []
