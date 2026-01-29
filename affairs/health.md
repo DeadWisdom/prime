@@ -18,7 +18,7 @@ The monarch manages several ongoing health conditions:
 
 ## Matters Pending
 
-- [ ] Pick up generic Adderall prescription from Walgreens
+- [x] Pick up generic Adderall prescription from Walgreens
 - [ ] Order Capecitabine from costplusdrugs.com — new prescription submitted to doctor, awaiting approval before ordering
 - [ ] Attach Dexcom continuous glucose monitor
 - [ ] Call plastic surgery to schedule follow-up with Dr. Dumanian — **312-695-6022**

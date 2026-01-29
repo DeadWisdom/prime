@@ -359,7 +359,9 @@ Messages are stored in Redis as JSON strings. Two structures:
 2. **Message log** -- a Redis Sorted Set. Key: `loom:messages:{affair_id}` (or `loom:messages:global` for cross-cutting messages). Score is the Unix timestamp of `published`. Value is the full JSON message.
    This enables chronological querying of all messages for a project or globally.
 
-3. **Message by ID** -- a Redis Hash. Key: `loom:message:{message_id}`. Stores the full JSON. Used for `inReplyTo` resolution.
+   Note: storing full JSON as the sorted set member means two messages with identical content would deduplicate. This is acceptable at Loom's expected scale; if storage pressure arises, switch to storing message IDs as members with a separate lookup.
+
+3. **Message by ID** -- a Redis String. Key: `loom:message:{message_id}`. Stores the full JSON as a string value. Used for `inReplyTo` resolution.
 
 Messages are compact JSON-LD as defined above. No expansion is needed at runtime; the context is for semantic interoperability, not for runtime processing.
 
@@ -493,6 +495,8 @@ claude -p "{message_json}" \
   --resume {session_id} \
   --output-format json
 ```
+
+When resuming a session, `--allowedTools` and `--append-system-prompt` are not re-specified; the resumed session retains these from the original spawn.
 
 The message JSON is passed as the prompt text. The actor's system prompt (set at spawn) already instructs it on how to parse and respond to Loom messages.
 
@@ -753,7 +757,7 @@ Roles:
 |---|---|---|
 | `loom:inbox:{actor_id}` | List | Actor's message queue |
 | `loom:notify:{actor_id}` | Pub/Sub channel | Wake signal for actor dispatcher |
-| `loom:message:{message_id}` | Hash | Full message by ID |
+| `loom:message:{message_id}` | String (JSON) | Full message by ID |
 | `loom:messages:{affair_id}` | Sorted Set (by timestamp) | Message log per affair |
 | `loom:messages:global` | Sorted Set (by timestamp) | Cross-cutting message log |
 | `loom:actor:{actor_id}` | Hash | Actor registry record |

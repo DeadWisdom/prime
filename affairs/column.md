@@ -44,14 +44,16 @@ Original spec was SMS chatbot; pivoted to web forms (cheaper, simpler).
 
 ## Matters Pending
 
-- [ ] Obtain database access from Szabolcs to check member phone numbers
-- [ ] Write serverless function to check membership by phone number
-- [ ] Write serverless function to handle waitlist form submission
-- [ ] Deploy site to joincolumn.com
-- [ ] Confirm GitHub access (acct: deadwisdom)
-- [ ] Complete W9 for Mercury Bank (required for final payment)
+- [ ] Package project and send to Szabolcs
+- [ ] Send handoff email to Sarah — frame as "ball is in your court"
+- ~~Obtain database access from Szabolcs~~ (moot — handoff)
+- ~~Write serverless functions~~ (moot — handoff)
+- ~~Deploy site to joincolumn.com~~ (moot — handoff)
+- ~~Complete W9 for Mercury Bank~~ (intentionally not pursuing remaining payment)
 
 ## Ledger
+
+**2026-01-29** — Sarah responded asking to package everything up for Szabolcs to implement. Decision: disengage. Too many red flags — week-long block on database access, redirection of work to their CTO, CTO trial opportunity clearly not materializing. Plan: send packaged project with handoff note framing next steps as waiting on them, then let the thread die. $8k received for substantial frontend work delivered; not pursuing the remaining $9-10k. Do not submit W9.
 
 **2026-01-27** — Sarah asked for time accounting. Replied: roughly 30-35 hours so far. Early time on design-to-code and responsive work (where AI is weakest); architecture and deployment came together quickly. Remaining backend work expected to be fast once access is sorted.
 

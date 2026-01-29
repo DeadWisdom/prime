@@ -55,6 +55,10 @@ affairs/loom/
   ...            → Any other supporting material
 ```
 
+### Iterations
+
+Projects that go through multiple implementation phases should track completed work in a `docs/iterations/` directory using numbered files: `001-name.md`, `002-name.md`, `003-name.md`, etc. Each file documents what changed, why, and what files were affected. This provides a clear history of how the project evolved without cluttering the project root with phase documentation.
+
 The affair file (`affair.md` or `{name}.md`) always follows this structure:
 
 ```markdown

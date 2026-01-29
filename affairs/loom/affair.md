@@ -66,12 +66,17 @@ A browser-based orchestration system for coordinating multiple Claude agents acr
 
 ## Matters Pending
 
-- [ ] Define message schema
-- [ ] Define actor lifecycle (spawn, receive, act, send, die)
-- [ ] Design the actor registry / supervision tree
+- [x] Define message schema (AS2/JSON-LD with loom: namespace)
+- [x] Define actor lifecycle (8-state machine with validated transitions)
+- [x] Design the actor registry / supervision tree
+- [x] Prototype backend with actors + messaging + outbox
+- [x] Activity Sourcing migration (Phases 1-3)
+- [ ] End-to-end integration test with live Claude CLI subprocess
+- [ ] Prime's continuous iteration loop
+- [ ] Automatic supervision / error recovery
+- [ ] Authentication (simple token scheme)
+- [ ] Frontend / UI
 - [ ] Sketch UI wireframes
-- [ ] Prototype backend with two actors + Prime
-- [ ] Build minimal frontend
 
 ## The Court
 
@@ -124,5 +129,9 @@ A browser-based orchestration system for coordinating multiple Claude agents acr
 ## Ledger
 
 **2026-01-26** — Affair opened. Name chosen: Loom (weaving threads together). Core architectural decision: agents communicate via messages to each other rather than shared context or Prime querying sessions.
+
+**2026-01-29** — Activity Sourcing migration completed (Phases 1-3). Phase 1: activity log infrastructure (store, retrieve, paginate activities). Phase 2: `POST /outbox` endpoint with `process_activity()` pipeline — validation, idempotency, type-based dispatch for Spawn/Kill/Retry/ClearInbox/messages. Phase 3: all existing write endpoints rewired through the outbox internally. 94 tests passing, zero regressions. Iteration docs organized into `docs/iterations/001-003`. GitHub repo created at github.com/DeadWisdom/loom and pushed.
+
+**2026-01-28** — Prototype spike completed. Seven modules (messages, roles, redis, registry, actors, dispatcher, main), 45 tests. Observability endpoints added (12 new routes for inspecting messages, actors, inboxes, dispatcher status). Auditor reviewed code — 4 critical, 8 important, 6 minor issues identified. Spec reconciliation: 3 spec updates applied, 3 implementation fixes identified, 8 deferred. Activity Sourcing architecture conceived and documented in lore. Migration analysis completed — Loom ~70% aligned, 5-phase incremental path identified.
 
 **2026-01-27** — Key architectural decisions made: true actor model (agents are role-specialized, many per project, can spawn children), Prime runs continuously, file access open to all agents, persistence via Redis + markdown + git, multi-user support planned. Court roles defined (Prime Minister, Scribe, Scholar, Chancellor, Herald). Critical cost decision: use Claude Code CLI on Max plan as agent runtime rather than Anthropic API — agents are CLI subprocess invocations with session resume. Infrastructure: home machine + Cloudflare Tunnel + Upstash Redis. No Kubernetes. Scholar research completed: CLI supports `-p` mode with JSON output, `--resume` for sessions, `--allowedTools` for tool control, `--append-system-prompt` for role definition. Max plan limits shared across all usage (~50-200 prompts per 5-hour window on Max 5x). Multiple accounts or "extra usage" overflow are viable scaling paths. Agent SDK exists but requires API keys (pay-per-use), not subscription. Long-term vision added: voice interface and Realm View (late medieval Rimworld-style graphical interface where agents are pawns, infrastructure is world objects, projects are holdings).
