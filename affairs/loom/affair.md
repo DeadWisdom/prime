@@ -71,12 +71,13 @@ A browser-based orchestration system for coordinating multiple Claude agents acr
 - [x] Design the actor registry / supervision tree
 - [x] Prototype backend with actors + messaging + outbox
 - [x] Activity Sourcing migration (Phases 1-3)
-- [ ] End-to-end integration test with live Claude CLI subprocess
-- [ ] Prime's continuous iteration loop
+- [x] End-to-end integration test with live Claude CLI subprocess
+- [x] Prime's continuous iteration loop (15-min heartbeat, failure notifications)
+- [x] Frontend / UI (Lit MVP: chat, activity stream, actor panel)
+- [ ] Streaming output (show Prime working in real time)
 - [ ] Automatic supervision / error recovery
 - [ ] Authentication (simple token scheme)
-- [ ] Frontend / UI
-- [ ] Sketch UI wireframes
+- [ ] Dynamic tool grant workflow (actor requests → Crown approves)
 
 ## The Court
 
@@ -129,6 +130,8 @@ A browser-based orchestration system for coordinating multiple Claude agents acr
 ## Ledger
 
 **2026-01-26** — Affair opened. Name chosen: Loom (weaving threads together). Core architectural decision: agents communicate via messages to each other rather than shared context or Prime querying sessions.
+
+**2026-01-30** — Major milestone: first message from the web interface. Prime received a message from the Crown via the Lit UI, processed it with full tool access, edited files, and responded. Frontend MVP built: three-column dark theme with chat, activity stream, and actor panel. Lit + Bun + FastAPI/Jinja2 serving pipeline. Prime's iteration loop implemented (15-min heartbeat pulse, failure notifications via Flag messages, `POST /prime/start` and `/stop` control). Integration tests passed — full spawn→message→respond→route loop verified with real Claude CLI (18s). Fixed critical bug: `--allowedTools` not passed on `--resume` calls. Added JSON-LD context endpoint (`GET /ns/loom`) and raw response capture (synthetic Note for non-structured replies). 130 tests passing. GitHub repo pushed. Known issues: no streaming output (UI is silent while Prime works), no dynamic tool grant workflow.
 
 **2026-01-29** — Activity Sourcing migration completed (Phases 1-3). Phase 1: activity log infrastructure (store, retrieve, paginate activities). Phase 2: `POST /outbox` endpoint with `process_activity()` pipeline — validation, idempotency, type-based dispatch for Spawn/Kill/Retry/ClearInbox/messages. Phase 3: all existing write endpoints rewired through the outbox internally. 94 tests passing, zero regressions. Iteration docs organized into `docs/iterations/001-003`. GitHub repo created at github.com/DeadWisdom/loom and pushed.
 
